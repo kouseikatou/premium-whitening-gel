@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/payment.js": {
-      "runtime": "@vercel/node"
+      "runtime": "nodejs18.x"
     }
   },
   "rewrites": [

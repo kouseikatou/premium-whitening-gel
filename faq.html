@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Premium Whitening Gel</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-header h1 {
+            color: var(--text-dark);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .faq-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .faq-section {
+            margin-bottom: 3rem;
+        }
+
+        .faq-section h2 {
+            color: var(--warm-gold);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            border-bottom: 2px solid var(--warm-gold);
+            padding-bottom: 0.5rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            background: none;
+            padding: 1rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .faq-question:hover {
+            color: var(--warm-gold);
+        }
+
+        .faq-question-text {
+            flex: 1;
+            padding-right: 1rem;
+        }
+
+        .faq-answer {
+            padding: 0 0 1rem 0;
+            background: none;
+            color: var(--text-light);
+            line-height: 1.6;
+            display: none;
+            font-size: 1rem;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .faq-toggle {
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            color: var(--warm-gold);
+            font-weight: bold;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(139, 105, 20, 0.1);
+            border: 2px solid var(--warm-gold);
+            font-family: "Arial", "Helvetica", sans-serif;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .faq-toggle.active {
+            transform: rotate(180deg);
+            background: var(--warm-gold);
+            color: white;
+            border-color: var(--warm-gold);
+        }
+
+        .guarantee-note {
+            background: linear-gradient(135deg, var(--warm-gold) 0%, var(--rose-gold) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .guarantee-note h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .guarantee-note p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: var(--rose-gold);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            background: var(--warm-gold);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="faq-container">
+        <div class="faq-header">
+            <h1>Frequently Asked Questions</h1>
+            <p>Find answers to common questions about Premium Whitening Gel. If you have other questions, please feel free to contact us.</p>
+        </div>
+
+        <div class="faq-section">
+            <h2>Product Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">Is teeth whitening safe?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, our product has been FDA approved since 1983 with over 40 years of proven safety. Available in pharmacies across America, it safely whitens teeth without weakening them.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">How long before I see results?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Individual results vary, but most users notice whiter teeth within 1-2 weeks of use. For optimal results, we recommend following the recommended usage method for at least 2 weeks. Results vary from person to person.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">Will I experience tooth sensitivity?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our product contains sensitivity-relief complex, making it comfortable for most users. If you experience strong pain or discomfort, discontinue use and contact our customer support.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">What are the ingredients?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our product features high-concentration whitening agents, enamel-strengthening formula, and sensitivity-relief complex in a dentist-developed professional grade formula. 100% cruelty-free manufacturing.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">How do I use the product?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Use once weekly: dry teeth, apply 1ml gel per tooth, LED light for 6-8 minutes, repeat 3-6 times. Continue for 4 weeks for optimal results.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">What stains does it remove?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Effective against coffee, tea, red wine, tobacco stains, and age-related yellowing. Not effective on medication-induced discoloration or artificial teeth (crowns, fillings, etc.).</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">How long do results last?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Duration varies with lifestyle habits, typically 6 months to 1 year. Avoiding staining foods and beverages helps maintain results longer.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span class="faq-question-text">Can pregnant or nursing women use this?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>We recommend pregnant and nursing women avoid use. Also not recommended for those under 18 years of age.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Shipping Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>How long does shipping take?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Orders typically arrive within 3-7 business days after confirmation. Delivery times may vary based on location and stock availability. Tracking numbers provided.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I return or exchange?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>30-day satisfaction guarantee - full refund within 30 days of delivery if unsatisfied with results. Please contact customer support for easy returns.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I cancel my order?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Orders can be cancelled before shipping. Contact info@infinitetoothcares.com promptly. If already shipped, use our return process after delivery.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I track my order?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, tracking numbers are emailed upon shipment. You can track your order on the carrier's website or by phone.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="guarantee-note">
+            <h3>30-Day Risk-Free Guarantee</h3>
+            <p>If you're not satisfied with your results, we offer a full refund within 30 days. Try with confidence.</p>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <script>
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+            
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                toggle.classList.remove('active');
+                toggle.textContent = '+';
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(ans => {
+                    ans.classList.remove('active');
+                });
+                document.querySelectorAll('.faq-toggle').forEach(tog => {
+                    tog.classList.remove('active');
+                    tog.textContent = '+';
+                });
+                
+                // Open clicked FAQ
+                answer.classList.add('active');
+                toggle.classList.add('active');
+                toggle.textContent = '−';
+            }
+        }
+    </script>
+</body>
+</html>

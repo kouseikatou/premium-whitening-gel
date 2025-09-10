@@ -1,0 +1,202 @@
+
+.right{
+  text-align: right;
+}
+
+.field {
+  display: flex;
+}
+
+input:focus {
+  outline-color: #785aff;
+  outline-style: solid; 
+  outline-width: 1px;
+  background-color: #f2fbff; 
+}
+
+
+.ai-send {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex p{
+  font-size: 18px;
+}
+
+
+img{
+  height: 100px;
+  width: 100px;
+  border-radius: 3px;
+}
+
+.top-pr{
+  font-size: 16px;
+  text-align: center;
+  padding: 16px 0 20px 0;
+}
+
+.a {
+  flex: 1;
+}
+
+.a p, .a h4, .a h3 {
+  margin: 5px 0;
+}
+
+.a h4, .a h3 {
+  font-weight: bold;
+}
+
+.right {
+  text-align: right;
+}
+
+h5, h3 {
+  margin: 5px 0;
+}
+
+.ai-send {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.a p, .a h4, .a h3 {
+  margin: 10px 0;
+}
+
+.a h4, .a h3 {
+  font-weight: bold;
+}
+
+.right {
+  text-align: right;
+}
+
+h5, h3 {
+  margin: 5px 0;
+}
+
+
+
+#paymentForm {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* 請求先情報とカード情報の見出しスタイル */
+  h2 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+    padding-top: 40px;
+  }
+
+  
+  
+  /* 入力フィールドのスタイル */
+  input[type="text"] {
+    width: 100%;
+    padding: 17px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box; /* ボックスモデルの計算にpaddingとborderを含める */
+  }
+  
+  /* ボタンのスタイル */  
+  .button1  {
+    font-size: 17px;
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 30px  0 20px 0;
+    padding: 17px;
+  }
+  
+  .button1:hover {
+    background-color: #0056b3;
+  }
+
+@media screen and (max-width: 1199px) {
+  
+  body{
+    padding: 0 20px;
+
+  }
+
+  .top-pr-1{
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+}
+
+
+@media screen and (min-width: 1200px) {
+
+  .head-1{
+    max-width: 1120px;
+    padding: 15px 0;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .p-0{
+    padding-top: 0px;
+  }
+
+  .con{
+    display: flex;
+    flex-direction: row-reverse;
+    
+  }
+
+  .top-pr-1{
+    
+    width: 45%;
+    background-color: #e5e5e5;
+    height: 2500px;
+
+  }
+  .top-pr1 {
+    position: fixed;
+     width: 450px;
+    padding: 40px;
+  }
+
+  p{
+    font-size: 16px;
+  }
+
+  .top-pr-2{
+    width: 55%;
+  }
+
+  .top-pr2{
+    width: 600px;
+    padding: 40px;
+    margin: 0 0 0 auto;
+  }
+  
+
+  .top-pr{
+    display: none;
+  }
+}

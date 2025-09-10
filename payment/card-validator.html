@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カード番号検証ツール</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .details {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .test-cards {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .test-cards h3 {
+            margin-top: 0;
+            color: #0c5460;
+        }
+        .test-cards ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .test-cards li {
+            margin: 5px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 クレジットカード番号検証ツール</h1>
+        <p>エラーコード37の原因を特定するためのツールです。</p>
+        
+        <div class="form-group">
+            <label for="cardNumber">クレジットカード番号</label>
+            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+            <small>スペースは自動的に除去されます</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="expMonth">有効期限（月）</label>
+            <input type="text" id="expMonth" placeholder="12" maxlength="2">
+        </div>
+        
+        <div class="form-group">
+            <label for="expYear">有効期限（年）</label>
+            <input type="text" id="expYear" placeholder="25" maxlength="4">
+        </div>
+        
+        <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" placeholder="123" maxlength="4">
+        </div>
+        
+        <button onclick="validateCard()">検証する</button>
+        
+        <div id="result"></div>
+        
+        <div class="test-cards">
+            <h3>⚠️ テストカード番号（PRODUCTION環境では使用不可）</h3>
+            <ul>
+                <li><strong>Visa:</strong> 4111111111111111</li>
+                <li><strong>Mastercard:</strong> 5555555555554444</li>
+                <li><strong>American Express:</strong> 370000000000002</li>
+                <li><strong>Discover:</strong> 6011111111111117</li>
+            </ul>
+            <p><small>これらの番号はSANDBOX環境でのみ有効です。本番環境では実際のカード番号が必要です。</small></p>
+        </div>
+    </div>
+
+    <script>
+        // Luhn algorithm implementation
+        function luhnCheck(cardNumber) {
+            let sum = 0;
+            let alternate = false;
+            
+            for (let i = cardNumber.length - 1; i >= 0; i--) {
+                let n = parseInt(cardNumber.charAt(i), 10);
+                if (alternate) {
+                    n *= 2;
+                    if (n > 9) {
+                        n = (n % 10) + 1;
+                    }
+                }
+                sum += n;
+                alternate = !alternate;
+            }
+            
+            return (sum % 10) === 0;
+        }
+
+        // Detect card type
+        function getCardType(cardNumber) {
+            const patterns = {
+                'Visa': /^4[0-9]{12}(?:[0-9]{3})?$/,
+                'Mastercard': /^5[1-5][0-9]{14}$/,
+                'American Express': /^3[47][0-9]{13}$/,
+                'Discover': /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+                'JCB': /^(?:2131|1800|35\d{3})\d{11}$/,
+                'Diners Club': /^3[0689][0-9]{11}$/
+            };
+            
+            for (let type in patterns) {
+                if (patterns[type].test(cardNumber)) {
+                    return type;
+                }
+            }
+            return 'Unknown';
+        }
+
+        // Check if it's a test card
+        function isTestCard(cardNumber) {
+            const testCards = [
+                '4111111111111111', '4012888888881881', '4222222222222',
+                '5555555555554444', '5105105105105100',
+                '370000000000002', '378282246310005',
+                '6011111111111117', '6011000990139424'
+            ];
+            return testCards.includes(cardNumber);
+        }
+
+        function validateCard() {
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s+/g, '');
+            const expMonth = document.getElementById('expMonth').value;
+            const expYear = document.getElementById('expYear').value;
+            const cvv = document.getElementById('cvv').value;
+            const resultDiv = document.getElementById('result');
+            
+            let resultHTML = '';
+            let hasErrors = false;
+            
+            // Card number validation
+            if (!cardNumber) {
+                resultHTML += '<div class="error">❌ カード番号が入力されていません</div>';
+                hasErrors = true;
+            } else {
+                // Length check
+                if (cardNumber.length < 13 || cardNumber.length > 19) {
+                    resultHTML += '<div class="error">❌ カード番号の桁数が無効です（13-19桁である必要があります）</div>';
+                    hasErrors = true;
+                }
+                
+                // Luhn check
+                if (!luhnCheck(cardNumber)) {
+                    resultHTML += '<div class="error">❌ Luhn算法チェックに失敗しました（カード番号が無効です）</div>';
+                    hasErrors = true;
+                } else {
+                    resultHTML += '<div class="success">✅ Luhn算法チェックに合格しました</div>';
+                }
+                
+                // Card type detection
+                const cardType = getCardType(cardNumber);
+                if (cardType !== 'Unknown') {
+                    resultHTML += '<div class="info">ℹ️ カードタイプ: ' + cardType + '</div>';
+                } else {
+                    resultHTML += '<div class="warning">⚠️ カードタイプを特定できませんでした</div>';
+                }
+                
+                // Test card check
+                if (isTestCard(cardNumber)) {
+                    resultHTML += '<div class="warning">⚠️ これはテスト用カード番号です（PRODUCTION環境では使用不可）</div>';
+                }
+            }
+            
+            // Expiry validation
+            if (!expMonth || !expYear) {
+                resultHTML += '<div class="error">❌ 有効期限が入力されていません</div>';
+                hasErrors = true;
+            } else {
+                const month = parseInt(expMonth);
+                const year = parseInt(expYear);
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear() % 100;
+                const currentMonth = currentDate.getMonth() + 1;
+                
+                if (month < 1 || month > 12) {
+                    resultHTML += '<div class="error">❌ 無効な月です（1-12で入力してください）</div>';
+                    hasErrors = true;
+                }
+                
+                if (year < currentYear || (year === currentYear && month < currentMonth)) {
+                    resultHTML += '<div class="error">❌ 有効期限が過去の日付です</div>';
+                    hasErrors = true;
+                } else {
+                    resultHTML += '<div class="success">✅ 有効期限は有効です</div>';
+                }
+            }
+            
+            // CVV validation
+            if (!cvv) {
+                resultHTML += '<div class="error">❌ CVVが入力されていません</div>';
+                hasErrors = true;
+            } else if (cvv.length < 3 || cvv.length > 4) {
+                resultHTML += '<div class="error">❌ CVVの桁数が無効です（3-4桁である必要があります）</div>';
+                hasErrors = true;
+            } else {
+                resultHTML += '<div class="success">✅ CVVは有効です</div>';
+            }
+            
+            // Summary
+            if (!hasErrors) {
+                resultHTML += '<div class="success"><strong>🎉 すべての検証に合格しました！</strong><div class="details">このカード情報はフォーマット的には有効です。エラー37が発生する場合は、他の原因を調査してください。</div></div>';
+            } else {
+                resultHTML += '<div class="error"><strong>❌ 検証エラーがあります</strong><div class="details">上記のエラーを修正してから再度お試しください。</div></div>';
+            }
+            
+            // Technical details
+            resultHTML += '<div class="info"><strong>技術的詳細:</strong><div class="details">';
+            resultHTML += 'カード番号長さ: ' + cardNumber.length + '桁<br>';
+            resultHTML += 'Luhn検証: ' + (luhnCheck(cardNumber) ? '合格' : '不合格') + '<br>';
+            resultHTML += 'カードタイプ: ' + getCardType(cardNumber) + '<br>';
+            resultHTML += 'テストカード: ' + (isTestCard(cardNumber) ? 'はい' : 'いいえ');
+            resultHTML += '</div></div>';
+            
+            resultDiv.innerHTML = resultHTML;
+        }
+
+        // Auto-format card number input
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // Restrict month input
+        document.getElementById('expMonth').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+
+        // Restrict year input
+        document.getElementById('expYear').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+
+        // Restrict CVV input
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+</body>
+</html>

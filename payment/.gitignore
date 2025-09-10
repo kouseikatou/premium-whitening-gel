@@ -1,0 +1,42 @@
+*.DS_Store
+composer.lock
+vendor
+phpunit.xml
+tests/log
+build
+phplog
+
+# Ignore eclipse project files
+.buildpath
+.project
+.settings
+backup
+
+# Environment variables and sensitive configs
+.env
+.env.local
+.env.production
+config.local.php
+config.production.php
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Test output
+tests/report.html
+tests/coverage/
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.cache
+*.bak
+*.backup

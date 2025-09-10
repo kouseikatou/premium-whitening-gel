@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>セットアップチェックリスト</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        .step {
+            margin: 25px 0;
+            padding: 20px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            position: relative;
+        }
+        .step.completed {
+            border-color: #27ae60;
+            background: #f8fff8;
+        }
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .step.completed .step-number {
+            background: #27ae60;
+        }
+        .step-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            margin-left: 20px;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin-left: 20px;
+        }
+        .checklist li {
+            margin: 8px 0;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+        .checklist li.completed {
+            background: #d4edda;
+            border-left-color: #27ae60;
+            text-decoration: line-through;
+            color: #6c757d;
+        }
+        .checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .btn.success {
+            background: #27ae60;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #27ae60);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 決済システム Google Sheets連携 セットアップチェックリスト</h1>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">0% 完了</div>
+
+        <!-- Step 1: Googleスプレッドシート -->
+        <div class="step" id="step1">
+            <div class="step-number">1</div>
+            <div class="step-title">📊 Googleスプレッドシート作成</div>
+            <ul class="checklist">
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> Google Sheetsで新しいスプレッドシートを作成</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> タイトルを「注文管理」に変更</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> A1からX1までヘッダー行を設定</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> シート名を「Orders」に変更</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> スプレッドシートIDをURLから取得・保存</li>
+            </ul>
+            <div class="code-block">URLの例:
+https://docs.google.com/spreadsheets/d/【ここがスプレッドシートID】/edit</div>
+        </div>
+
+        <!-- Step 2: Google Apps Script -->
+        <div class="step" id="step2">
+            <div class="step-number">2</div>
+            <div class="step-title">⚙️ Google Apps Script設定</div>
+            <ul class="checklist">
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> script.google.comで新しいプロジェクト作成</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> プロジェクト名を「注文データ受信」に変更</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> 提供されたJavaScriptコードを貼り付け</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> 「デプロイ」→「新しいデプロイ」実行</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> ウェブアプリとして設定（実行者:自分、アクセス:全員）</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> 認証を完了</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> Web App URLを取得・保存</li>
+            </ul>
+        </div>
+
+        <!-- Step 3: PHP設定 -->
+        <div class="step" id="step3">
+            <div class="step-number">3</div>
+            <div class="step-title">🔧 PHP設定更新</div>
+            <ul class="checklist">
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> config.phpを開く</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> GOOGLE_SPREADSHEET_IDを実際のIDに変更</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> GOOGLE_APPS_SCRIPT_URLを実際のURLに変更</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> AUTHORIZENET_ENVIRONMENTが'SANDBOX'に設定されていることを確認</li>
+            </ul>
+            <div class="code-block">config.php更新例:
+define('GOOGLE_SPREADSHEET_ID', 'あなたのスプレッドシートID');
+define('GOOGLE_APPS_SCRIPT_URL', 'あなたのWeb App URL');</div>
+        </div>
+
+        <!-- Step 4: Authorize.Net設定 -->
+        <div class="step" id="step4">
+            <div class="step-number">4</div>
+            <div class="step-title">💳 Authorize.Net SANDBOX設定</div>
+            <ul class="checklist">
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> developer.authorize.netでSANDBOXアカウント作成</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> API Login IDを取得</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> Transaction Keyを取得</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> Public Client Keyを取得</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> config.phpの認証情報を更新</li>
+            </ul>
+        </div>
+
+        <!-- Step 5: テスト実行 -->
+        <div class="step" id="step5">
+            <div class="step-number">5</div>
+            <div class="step-title">🧪 テスト実行</div>
+            <ul class="checklist">
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> setup-test.phpにアクセス</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> 設定状況確認で全て✅になることを確認</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> Apps Script動作テスト成功</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> テストデータ送信成功</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> スプレッドシートにテストデータが表示されることを確認</li>
+            </ul>
+            <a href="setup-test.php" class="btn" target="_blank">setup-test.phpを開く</a>
+        </div>
+
+        <!-- Step 6: 決済テスト -->
+        <div class="step" id="step6">
+            <div class="step-number">6</div>
+            <div class="step-title">💰 決済テスト</div>
+            <ul class="checklist">
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> index.phpにアクセス</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> フォームに適当な情報を入力</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> テストクレジットカード（4111111111111111）で決済</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> 決済成功画面が表示される</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> スプレッドシートに決済データが追加される</li>
+                <li><input type="checkbox" class="checkbox" onchange="updateProgress()"> データが正しく入力されていることを確認</li>
+            </ul>
+            <div class="warning">
+                <strong>テスト用クレジットカード情報:</strong><br>
+                カード番号: 4111111111111111<br>
+                有効期限: 12/25（将来の日付）<br>
+                CVV: 123<br>
+                名前: Test User
+            </div>
+            <a href="index.php" class="btn" target="_blank">決済フォームを開く</a>
+        </div>
+
+        <!-- 完了メッセージ -->
+        <div id="completionMessage" style="display: none;">
+            <div class="success">
+                <h2>🎉 セットアップ完了！</h2>
+                <p>すべてのステップが完了しました。決済システムとGoogle Sheetsの連携が正常に動作しています。</p>
+                <ul>
+                    <li>✅ 決済処理が正常に動作</li>
+                    <li>✅ スプレッドシートへのデータ転送が動作</li>
+                    <li>✅ 本番運用の準備完了</li>
+                </ul>
+                <p><strong>次のステップ:</strong></p>
+                <ul>
+                    <li>本番環境に移行する場合は、AUTHORIZENET_ENVIRONMENTを'PRODUCTION'に変更</li>
+                    <li>実際のAuthorize.Net本番認証情報に更新</li>
+                    <li>セキュリティ設定の確認</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- トラブルシューティング -->
+        <div class="step">
+            <div class="step-number">❓</div>
+            <div class="step-title">🔧 トラブルシューティング</div>
+            <div style="margin-left: 20px;">
+                <h4>よくある問題:</h4>
+                <ul>
+                    <li><strong>Apps Script認証エラー:</strong> 「詳細設定」→「安全でないページに移動」を選択</li>
+                    <li><strong>スプレッドシートにデータが入らない:</strong> URLやIDの設定を再確認</li>
+                    <li><strong>決済認証エラー:</strong> Authorize.Net SANDBOX認証情報を確認</li>
+                    <li><strong>決済成功だがシート未反映:</strong> authorize-credit-card.php:342行目のコメントアウトを確認</li>
+                </ul>
+                
+                <h4>デバッグツール:</h4>
+                <a href="setup-test.php" class="btn">設定テストページ</a>
+                <a href="test-tools/sheets/test-data-sender.php" class="btn">データ送信テスト</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const totalCheckboxes = checkboxes.length;
+            let checkedCount = 0;
+
+            checkboxes.forEach((checkbox, index) => {
+                const listItem = checkbox.parentElement;
+                if (checkbox.checked) {
+                    listItem.classList.add('completed');
+                    checkedCount++;
+                } else {
+                    listItem.classList.remove('completed');
+                }
+            });
+
+            // ステップの完了状態を更新
+            for (let i = 1; i <= 6; i++) {
+                const step = document.getElementById(`step${i}`);
+                const stepCheckboxes = step.querySelectorAll('input[type="checkbox"]');
+                const stepChecked = Array.from(stepCheckboxes).every(cb => cb.checked);
+                
+                if (stepChecked) {
+                    step.classList.add('completed');
+                } else {
+                    step.classList.remove('completed');
+                }
+            }
+
+            // プログレスバーを更新
+            const percentage = Math.round((checkedCount / totalCheckboxes) * 100);
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% 完了';
+
+            // 完了メッセージを表示
+            if (percentage === 100) {
+                document.getElementById('completionMessage').style.display = 'block';
+                // ページの一番下にスクロール
+                setTimeout(() => {
+                    document.getElementById('completionMessage').scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                }, 500);
+            } else {
+                document.getElementById('completionMessage').style.display = 'none';
+            }
+        }
+
+        // ページ読み込み時に初期状態を設定
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

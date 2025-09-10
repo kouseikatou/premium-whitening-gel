@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/payment.js": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/payment/(.*)",
+      "destination": "/api/payment"
+    }
+  ]
+}
